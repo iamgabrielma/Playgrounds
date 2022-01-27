@@ -13,7 +13,7 @@ protocol Switchable {
     func off()
 }
 
-// An autonomous Robot that can switch appliances on and off
+
 final class Robot {
     func turnOn(appliance: Switchable) {
         print("(*in a robotic voice*) Bleep blop bleep - I. shall. turn. on.");
@@ -36,16 +36,11 @@ class LocationGateway {
     }
 }
 
-class HackedLocationGateway: LocationGateway {
-    override func log(position: String) {
-        print("Location logged completely un-encrypted, and leaked to the forces of good: " + position)
-    }
-}
-
 final class Rogers {
+    private let gateway = LocationGateway()
+
     func getLocationGateway() -> LocationGateway {
-        let hackedGateway = HackedLocationGateway()
-        return hackedGateway;
+        return gateway;
     }
 }
 
@@ -54,7 +49,7 @@ final class EvilPlan {
         let robot = Robot()
         let evilLogging = Rogers()
         let locationLog = evilLogging.getLocationGateway()
-        
+
         // turn something on / off
         locationLog.log(position: "Ottawa. Switched a bunch of stuff off")
     }
